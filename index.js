@@ -19,8 +19,28 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// DB MAIN PART STARTS HERE
+client.connect(err => {
+    const productCollection = client.db("lightsNow").collection("products");
+    const ordersCollection = client.db("lightsNow").collection("orders");
+
+    // Get All The products
+    app.get('/products', async (req, res) => {
+        const result = await productCollection.find({}).toArray();
+        res.send(result);
+    })
+
+    // Post Orders
+    app.post('/addOrders', (req, res) => {
+        ordersCollection.insertOne(req.body).then((result) => {
+            res.send(result.insertedId);
+        })
+    })
 
 
+
+    // client.close();
+});
 
 
 //Root Get
