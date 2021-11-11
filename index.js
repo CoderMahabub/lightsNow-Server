@@ -52,10 +52,21 @@ client.connect(err => {
         res.send(result)
     })
 
+    // Add User To DB
     app.post('/users', async (req, res) => {
         const user = req.body;
         const result = await usersCollection.insertOne(user);
         console.log(result);
+        res.json(result)
+    })
+
+    // Add users if not in db
+    app.put('/users', async (req, res) => {
+        const user = req.body;
+        const filter = { email: user.email };
+        const options = { upsert: true };
+        const updateDoc = { $set: user };
+        const result = await usersCollection.updateOne(filter, updateDoc, options);
         res.json(result)
     })
 
