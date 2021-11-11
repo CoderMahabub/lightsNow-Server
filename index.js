@@ -37,6 +37,12 @@ client.connect(err => {
         })
     })
 
+    // Get All Orders
+    app.get('/allOrders', async (req, res) => {
+        const result = await ordersCollection.find({}).toArray();
+        res.send(result);
+    })
+
 
 
     // client.close();
