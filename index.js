@@ -21,8 +21,10 @@ app.use(express.json());
 
 // DB MAIN PART STARTS HERE
 client.connect(err => {
-    const productCollection = client.db("lightsNow").collection("products");
-    const ordersCollection = client.db("lightsNow").collection("orders");
+    const database = client.db("lightsNow");
+    const productCollection = database.collection("products");
+    const ordersCollection = database.collection("orders");
+    const usersCollection = database.collection("users");
 
     // Get All The products
     app.get('/products', async (req, res) => {
@@ -41,6 +43,13 @@ client.connect(err => {
     app.get('/allOrders', async (req, res) => {
         const result = await ordersCollection.find({}).toArray();
         res.send(result);
+    })
+
+    // Delete Single Order
+    app.delete('/deleteOrder/:id', async (req, res) => {
+        const id = req.params.id;
+        const result = await ordersCollection.deleteOne({ _id: ObjectId(id) });
+        res.send(result)
     })
 
 
