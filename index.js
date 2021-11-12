@@ -118,6 +118,14 @@ client.connect(err => {
         res.send(result)
     })
 
+    // Post Single Product
+    app.post('/addProduct', async (req, res) => {
+        const product = req.body;
+        const result = await productCollection.insertOne(product);
+        // console.log(result);
+        res.json(result)
+    })
+
 
 
 
