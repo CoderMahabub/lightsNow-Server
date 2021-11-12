@@ -125,6 +125,37 @@ client.connect(err => {
         // console.log(result);
         res.json(result)
     })
+    // Delete Single Product
+    app.delete('/deleteProduct/:id', async (req, res) => {
+        const id = req.params.id;
+        const result = await productCollection.deleteOne({ _id: ObjectId(id) });
+        res.send(result)
+    })
+
+    // Get Single Product
+    app.get('/singleProduct/:id', async (req, res) => {
+        productCollection.findOne({ _id: ObjectId(req.params.id) }).then(result => {
+            // console.log(result);
+            res.send(result)
+        });
+    })
+
+    // Update Booking Status
+    app.put('/updateProduct/:id', (req, res) => {
+        const id = req.params.id;
+        const updatedInfo = req.body;
+        productCollection.updateOne({ _id: ObjectId(id) }, {
+            $set: {
+                lightTitle: updatedInfo.lightTitle,
+                lightDescription: updatedInfo.lightDescription,
+                lightPrice: updatedInfo.lightPrice,
+                lightThumbnail: updatedInfo.lightThumbnail,
+            }
+        })
+            .then(result => res.send(result))
+    })
+
+
 
 
 
