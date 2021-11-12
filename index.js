@@ -91,6 +91,34 @@ client.connect(err => {
         res.json({ admin: isAdmin });
     })
 
+    // Update Order Status to Approved
+    app.put('/changeStatus/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: ObjectId(id) };
+        const updateDoc = {
+            $set: {
+                status: 'Shipped'
+            }
+        };
+        const result = await ordersCollection.updateOne(query, updateDoc);
+        res.json(result)
+    })
+
+
+    // Get All Orders
+    app.get('/allOrders', async (req, res) => {
+        const result = await ordersCollection.find({}).toArray();
+        res.send(result);
+    })
+
+    // Cancel Single Order
+    app.delete('/deleteOrder/:id', async (req, res) => {
+        const id = req.params.id;
+        const result = await ordersCollection.deleteOne({ _id: ObjectId(id) });
+        res.send(result)
+    })
+
+
 
 
 
