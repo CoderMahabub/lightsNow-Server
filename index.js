@@ -25,6 +25,7 @@ client.connect(err => {
     const productCollection = database.collection("products");
     const ordersCollection = database.collection("orders");
     const usersCollection = database.collection("users");
+    const reviewsCollection = database.collection("reviews");
 
     // Get All The products
     app.get('/products', async (req, res) => {
@@ -154,7 +155,11 @@ client.connect(err => {
             .then(result => res.send(result))
     })
 
-
+    // Get All The Reviews
+    app.get('/reviews', async (req, res) => {
+        const result = await reviewsCollection.find({}).toArray();
+        res.send(result);
+    })
 
 
 
