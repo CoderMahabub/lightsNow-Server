@@ -161,8 +161,13 @@ client.connect(err => {
         res.send(result);
     })
 
-
-
+    // Post Single Review
+    app.post('/addReview', async (req, res) => {
+        const product = req.body;
+        const result = await reviewsCollection.insertOne(product);
+        console.log(result);
+        res.json(result)
+    })
 
 
     // client.close();
