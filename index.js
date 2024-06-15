@@ -4,11 +4,11 @@ const cors = require('cors');
 require('dotenv').config();
 const mongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 
 
 // DB Connection  Start
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rwtvo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER}@cluster0.rwtvo.mongodb.net/lightsNow?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
